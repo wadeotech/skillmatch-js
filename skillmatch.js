@@ -11,7 +11,7 @@ const candidato = {
     habilidades: ["JavaScript","Git", "GitHub", "HTML", "CSS", "Visual Studio Code", "Trello"]
 };
 
-console.log(candidato);
+//console.log(candidato);
 
 //Descrição das Vagas
 
@@ -39,6 +39,20 @@ const vagas = [
     }
 ];
 
-console.log(vagas);
+//console.log(vagas);
 
-console.log(vagas[1].experienciaMinimaMeses);
+//node skillmatch.jsconsole.log(vagas[1].experienciaMinimaMeses);
+
+//console.log(candidato.habilidades.includes("HTML"));
+//console.log(candidato.habilidades.includes("React"));
+
+//=== Funções ===
+
+const requisitosAtendidos = (vaga) => {
+  return vaga.requisitos.filter(req => candidato.habilidades.includes(req));
+};
+
+console.log(requisitosAtendidos(vagas[0]));
+console.log(requisitosAtendidos(vagas[1]));
+console.log(requisitosAtendidos(vagas[2]));
+
