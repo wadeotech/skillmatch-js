@@ -20,20 +20,25 @@ const vagas = [
     {
         empresa: "SENAI SC",
         cargo: "Desenvolvedor Front-End Júnior",
-        requisitos: ["HTML", "CSS", "JavaScript", "Git"]
+        requisitos: ["HTML", "CSS", "JavaScript", "Git"],
+        experienciaMinimaMeses: 0
     },
 
     {
         empresa: "Soluções Web Ltda",
         cargo: "Desenvolvedor Front-End Júnior",
-        requisitos: ["HTML", "CSS", "JavaScript", "GitHub", "Node.js", "API REST"]
+        requisitos: ["HTML", "CSS", "JavaScript", "GitHub", "Node.js", "API REST"],
+        experienciaMinimaMeses: 6
     },
 
     {
         empresa: "Conecta Web Ltda",
         cargo: "Desenvolvedor Front-End Júnior",
-        requisitos: ["JavaScript", "React", "TypeScript", "Tailwind", "Figma", "Testes"]
+        requisitos: ["JavaScript", "React", "TypeScript", "Tailwind", "Figma", "Testes"],
+        experienciaMinimaMeses: 12
     }
 ];
 
 console.log(vagas);
+
+console.log(vagas[1].experienciaMinimaMeses);
