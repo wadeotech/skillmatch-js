@@ -49,10 +49,7 @@ const vagas = [
 
 //=== Funções ===
 
-
-// A Função recebe uma vaga e retorna os requisitos dela que o candidato possui nas suas habilidades.
-
-// A função recebe os requisitos das vagas e retorna as que são iguais às habilidades do candidato.
+// A função recebe uma vaga e retorna os requisitos dela que o candidato possui como habilidade.
 
 const requisitosAtendidos = (vaga) => {
   return vaga.requisitos.filter(req => candidato.habilidades.includes(req));
