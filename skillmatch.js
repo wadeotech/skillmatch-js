@@ -71,3 +71,16 @@ const calcularPercentual = (vaga) => {
 console.log(calcularPercentual(vagas[0]));
 console.log(calcularPercentual(vagas[1]));
 console.log(calcularPercentual(vagas[2]));
+
+//console.log(candidato.habilidades.includes("React"));
+//console.log(!candidato.habilidades.includes("React"));
+
+// // Função recebe uma vaga e retorna as habilidades que faltam ao candidato referente aos requisitos da vaga.
+
+const habilidadesFaltantes = (vaga) => {
+  return vaga.requisitos.filter(req => !candidato.habilidades.includes(req));
+};
+
+console.log(habilidadesFaltantes(vagas[0]));
+console.log(habilidadesFaltantes(vagas[1]));
+console.log(habilidadesFaltantes(vagas[2]));
