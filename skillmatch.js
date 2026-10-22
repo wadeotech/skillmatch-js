@@ -32,7 +32,7 @@ const vagas = [
     },
 
     {
-        empresa: "Conecta Web Ltda",
+        empresa: "Conecvaga.requita Web Ltda",
         cargo: "Desenvolvedor Front-End Júnior",
         requisitos: ["JavaScript", "React", "TypeScript", "Tailwind", "Figma", "Testes"],
         experienciaMinimaMeses: 12
@@ -59,3 +59,15 @@ console.log(requisitosAtendidos(vagas[0]));
 console.log(requisitosAtendidos(vagas[1]));
 console.log(requisitosAtendidos(vagas[2]));
 
+console.log(requisitosAtendidos(vagas[1]).length);
+console.log(vagas[1].requisitos.length);
+
+/*A função recebe uma vaga, filtra quantas habilidades compatíveis o candidato possui, divide as habilidades compatíveis pelo número total de requisitos da vaga, multiplica por 100 e retorna o valor percentual de compatibilidade de habilidades do candidato em relação aos requisitos da vaga.*/
+
+const calcularPercentual = (vaga) => {
+  return (requisitosAtendidos(vaga).length / vaga.requisitos.length) * 100;
+};
+
+console.log(calcularPercentual(vagas[0]));
+console.log(calcularPercentual(vagas[1]));
+console.log(calcularPercentual(vagas[2]));
