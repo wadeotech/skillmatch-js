@@ -93,4 +93,20 @@ class Vaga {
 }
 
 const teste = new Vaga("SENAI SC", "Desenvolvedor Front-End Júnior", ["HTML", "CSS", "JavaScript", "Git"], 0 );
-console.log(teste.resumo());
+//console.log(teste.resumo());
+
+// A classe representa uma vaga de trabalho remoto que herda os dados da classe mãe e acrescenta a forma de trabalho.
+
+class VagaRemota extends Vaga {
+  constructor(empresa, cargo, requisitos, experienciaMinimaMeses, formaTrabalho) {
+    super(empresa, cargo, requisitos, experienciaMinimaMeses);
+    this.formaTrabalho = formaTrabalho;
+  }
+
+  resumo() {
+    return super.resumo() + " ; Forma de trabalho: " + this.formaTrabalho; 
+  }
+}
+
+const testeRemota = new VagaRemota("Soluções Web Ltda", "Desenvolvedor Front-End Júnior", ["HTML", "CSS", "JavaScript", "GitHub", "Node.js", "API REST"], 6, "100% Remota" );
+console.log(testeRemota.resumo());
