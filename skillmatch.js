@@ -91,8 +91,26 @@ const classificarCompatibilidade = (percentual) => {
 };
 
 // Recebe uma lista de vagas e um critério, e retorna só as vagas que passam no critério.
+
 const filtrarVagas = (listaVagas, criterio) => {
   return listaVagas.filter(criterio);
 };
 
-console.log(filtrarVagas(vagas, experienciaSuficiente));
+//console.log(filtrarVagas(vagas, experienciaSuficiente));
+
+// Cria e devolve uma função que numera as vagas. A cada chamada soma 1 e devolve o número da vez. A contagem fica guardada dentro de criarContadorDeVagas (closure), por não ser uma variável global.
+
+const criarContadorDeVagas = () => {
+  let numero = 0;
+
+  return () => {
+    numero = numero + 1;
+    return numero;
+  };
+};
+
+const proximaVaga = criarContadorDeVagas();
+
+console.log(proximaVaga());
+console.log(proximaVaga());
+console.log(proximaVaga());
