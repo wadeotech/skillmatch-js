@@ -74,3 +74,23 @@ const classificarCompatibilidade = (percentual) => {
     return "Baixa compatibilidade";
   }
 };
+
+//=== Classes ===
+
+// A classe representa uma vaga de trabalho e guarda os dados da vaga, como: empresa, cargo, requisitos e tempo de experiência.
+
+class Vaga {
+  constructor(empresa, cargo, requisitos, experienciaMinimaMeses) {
+    this.empresa = empresa;
+    this.cargo = cargo;
+    this.requisitos = requisitos;
+    this.experienciaMinimaMeses = experienciaMinimaMeses;
+  }
+
+  resumo() {
+    return " A empresa " + this.empresa + " está contratando: " + this.cargo + " ; Requisitos solicitados: " + this.requisitos + " ; Experiência mínima necessária: " + this.experienciaMinimaMeses + " meses ";
+  }
+}
+
+const teste = new Vaga("SENAI SC", "Desenvolvedor Front-End Júnior", ["HTML", "CSS", "JavaScript", "Git"], 0 );
+console.log(teste.resumo());
