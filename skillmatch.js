@@ -11,30 +11,45 @@ const candidato = {
     habilidades: ["JavaScript","Git", "GitHub", "HTML", "CSS", "Visual Studio Code", "Trello"]
 };
 
+//=== Classes ===
+
+// A classe representa uma vaga de trabalho e guarda os dados da vaga, como: empresa, cargo, requisitos e tempo de experiência.
+
+class Vaga {
+  constructor(empresa, cargo, requisitos, experienciaMinimaMeses) {
+    this.empresa = empresa;
+    this.cargo = cargo;
+    this.requisitos = requisitos;
+    this.experienciaMinimaMeses = experienciaMinimaMeses;
+  }
+
+  resumo() {
+    return " A empresa " + this.empresa + " está contratando: " + this.cargo + " ; Requisitos solicitados: " + this.requisitos + " ; Experiência mínima necessária: " + this.experienciaMinimaMeses + " meses ";
+  }
+}
+
+// A classe representa uma vaga de trabalho remoto que herda os dados da classe mãe e acrescenta a forma de trabalho.
+
+class VagaRemota extends Vaga {
+  constructor(empresa, cargo, requisitos, experienciaMinimaMeses, formaTrabalho) {
+    super(empresa, cargo, requisitos, experienciaMinimaMeses);
+    this.formaTrabalho = formaTrabalho;
+  }
+
+  resumo() {
+    return super.resumo() + " ; Forma de trabalho: " + this.formaTrabalho; 
+  }
+}
+
 //Descrição das Vagas
 
 const vagas = [
     
-    {
-        empresa: "SENAI SC",
-        cargo: "Desenvolvedor Front-End Júnior",
-        requisitos: ["HTML", "CSS", "JavaScript", "Git"],
-        experienciaMinimaMeses: 0
-    },
+    new Vaga ( "SENAI SC", "Desenvolvedor Front-End Júnior", ["HTML", "CSS", "JavaScript", "Git"], 0 ),
 
-    {
-        empresa: "Soluções Web Ltda",
-        cargo: "Desenvolvedor Front-End Júnior",
-        requisitos: ["HTML", "CSS", "JavaScript", "GitHub", "Node.js", "API REST"],
-        experienciaMinimaMeses: 6
-    },
+    new VagaRemota ( "Soluções Web Ltda", "Desenvolvedor Front-End Júnior", ["HTML", "CSS", "JavaScript", "GitHub", "Node.js", "API REST"], 6, "100% Remota" ),
 
-    {
-        empresa: "Conecta Web Ltda",
-        cargo: "Desenvolvedor Front-End Júnior",
-        requisitos: ["JavaScript", "React", "TypeScript", "Tailwind", "Figma", "Testes"],
-        experienciaMinimaMeses: 12
-    }
+    new Vaga ( "Conecta Web Ltda", "Desenvolvedor Front-End Júnior", ["JavaScript", "React", "TypeScript", "Tailwind", "Figma", "Testes"], 12 ),
 ];
 
 //=== Funções ===
