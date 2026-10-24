@@ -95,3 +95,20 @@ const experienciaSuficiente = (vaga) => {
 console.log(experienciaSuficiente(vagas[0]));
 console.log(experienciaSuficiente(vagas[1]));
 console.log(experienciaSuficiente(vagas[2]));
+
+// A função recebe o percentual de compatibilidade entre a vaga e as habilidades do candidato e retorna a classificação em Alta, Média ou Baixa compatibilidade.
+
+const classificarCompatibilidade = (percentual) => {
+  if (percentual >= 80) {
+    return "Alta compatibilidade";
+  } else if (percentual >= 50) {
+    return "Média compatibilidade";
+  } else {
+    return "Baixa compatibilidade";
+  }
+};
+
+console.log(classificarCompatibilidade(80));
+console.log(classificarCompatibilidade(79.9));
+console.log(classificarCompatibilidade(50));
+console.log(classificarCompatibilidade(49.9));
