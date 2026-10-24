@@ -89,3 +89,10 @@ const classificarCompatibilidade = (percentual) => {
     return "Baixa compatibilidade";
   }
 };
+
+// Recebe uma lista de vagas e um critério, e retorna só as vagas que passam no critério.
+const filtrarVagas = (listaVagas, criterio) => {
+  return listaVagas.filter(criterio);
+};
+
+console.log(filtrarVagas(vagas, experienciaSuficiente));
