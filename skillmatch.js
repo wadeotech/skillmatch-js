@@ -84,3 +84,14 @@ const habilidadesFaltantes = (vaga) => {
 console.log(habilidadesFaltantes(vagas[0]));
 console.log(habilidadesFaltantes(vagas[1]));
 console.log(habilidadesFaltantes(vagas[2]));
+
+
+// A função recebe uma vaga, verifica a experiência exigida e retorna true se a experiência do candidato é suficiente, ou false se não é.
+
+const experienciaSuficiente = (vaga) => {
+  return candidato.experienciaMeses >= vaga.experienciaMinimaMeses;
+};
+
+console.log(experienciaSuficiente(vagas[0]));
+console.log(experienciaSuficiente(vagas[1]));
+console.log(experienciaSuficiente(vagas[2]));
