@@ -229,9 +229,13 @@ const gerarRelatorio = async () => {
       console.log("  Habilidades que faltam:", faltantes);
     }
 
+    // Compara a experiência do candidato com o mínimo exigido (ternário escolhe o texto)
+    const temExperiencia = experienciaSuficiente(vaga);
+
+    console.log("  Experiência exigida: " + vaga.experienciaMinimaMeses + " meses (você tem " + candidato.experienciaMeses + ") - " + (temExperiencia ? "suficiente" : "insuficiente"));
+
     console.log("");
   }
 };
 
-// Executa o relatório
 gerarRelatorio();
