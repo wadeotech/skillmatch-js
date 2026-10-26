@@ -24,8 +24,8 @@ class Vaga {
   }
 
   resumo() {
-    return " A empresa " + this.empresa + " está contratando: " + this.cargo + " ; Requisitos solicitados: " + this.requisitos + " ; Experiência mínima necessária: " + this.experienciaMinimaMeses + " meses ";
-  }
+    return " A empresa " + this.empresa + " está contratando: " + this.cargo + " ; Requisitos solicitados: " + this.requisitos.join(", ") + " ; Experiência mínima necessária: " + this.experienciaMinimaMeses + " meses";
+}
 }
 
 // A classe representa uma vaga de trabalho remoto que herda os dados da classe mãe e acrescenta a forma de trabalho.
@@ -147,8 +147,6 @@ const encontrarMelhorVaga = (listaVagas) => {
   });
 };
 
-//console.log(encontrarMelhorVaga(vagas).empresa);
-
 // A função recebe a lista de vagas e, para cada vaga, descobre as habilidades que faltam ao candidato. Depois conta quantas vezes cada habilidade faltante aparece nas vagas e devolve um objeto em que a chave é o nome da habilidade e o valor é essa quantidade.
 
 const contarFaltantes = (listaVagas) => {
@@ -171,8 +169,6 @@ const contarFaltantes = (listaVagas) => {
   return contagem;
 };
 
-//console.log(contarFaltantes(vagas));
-
 // A função recebe o objeto com a contagem das habilidades faltantes e devolve o nome da habilidade que mais aparece, que é a prioridade de estudo, pois estudá-la aproxima o candidato de mais vagas. Se duas habilidades empatam, vale a primeira encontrada. Se não houver nenhuma habilidade faltante, devolve a mensagem "Nenhuma habilidade faltando".
 
 const escolherPrioridade = (contagem) => {
@@ -193,4 +189,85 @@ const escolherPrioridade = (contagem) => {
   return prioritaria;
 };
 
-   console.log(escolherPrioridade({ "React": 1, "Node.js": 3, "API REST": 2 }));
+/* A função async monta e exibe o relatório completo no console. Carrega as vagas do servidor simulado (await), e, se houver vagas, mostra o cabeçalho do candidato e, para cada vaga, exibe: o resumo numerado, o percentual com a classificação, as habilidades que faltam e a comparação de experiência. Se nenhuma vaga for carregada, exibe uma mensagem e encerra sem gerar o relatório. Também lista as empresas analisadas (map) e as vagas em que a experiência é suficiente (callback)*/
+
+const gerarRelatorio = async () => {
+  console.log("Carregando vagas do servidor...");
+  // await pausa a função até a promessa do servidor simulado ser cumprida
+  const listaVagas = await carregarVagas();
+
+  // Se a lista vier vazia (falha no servidor), encerra sem gerar o relatório
+  if (listaVagas.length === 0) {
+    console.log("Não foi possível gerar o relatório: nenhuma vaga disponível.");
+    return;
+  }
+
+  // Cria o contador (closure) que numera as vagas a cada chamada
+  const proximoNumero = criarContadorDeVagas();
+
+  // Cabeçalho do relatório
+  console.log("=== SkillMatch JS: Relatório de Compatibilidade ===");
+  console.log("Candidato: " + candidato.nome);
+  console.log("Área de interesse: " + candidato.areaInteresse);
+
+  // map transforma a lista de vagas em uma lista só com os nomes das empresas
+  const empresas = listaVagas.map(vaga => vaga.empresa);
+  console.log("Vagas analisadas: " + empresas.join(", "));
+
+  console.log("");
+
+  // Para cada vaga, exibe os dados e a análise de compatibilidade
+  for (let i = 0; i < listaVagas.length; i++) {
+    const vaga = listaVagas[i];
+    const percentual = calcularPercentual(vaga);
+
+    // resumo() usa polimorfismo: Vaga e VagaRemota respondem de forma diferente
+    console.log("Vaga " + proximoNumero() + ":" + vaga.resumo());
+    console.log("  Compatibilidade: " + Math.round(percentual) + "% - " + classificarCompatibilidade(percentual));
+
+    // Habilidades exigidas pela vaga que o candidato ainda não tem
+    const faltantes = habilidadesFaltantes(vaga);
+
+    if (faltantes.length === 0) {
+      console.log("  Habilidades que faltam: nenhuma");
+    } else {
+      console.log("  Habilidades que faltam:", faltantes);
+    }
+
+    // Compara a experiência do candidato com o mínimo exigido (ternário escolhe o texto)
+    const temExperiencia = experienciaSuficiente(vaga);
+
+    console.log("  Experiência exigida: " + vaga.experienciaMinimaMeses + " meses (você tem " + candidato.experienciaMeses + ") - " + (temExperiencia ? "suficiente" : "insuficiente"));
+
+    console.log("");
+  }
+
+    // Callback: passa a função experienciaSuficiente para filtrarVagas, que a usa como critério
+  const vagasAcessiveis = filtrarVagas(listaVagas, experienciaSuficiente);
+
+  console.log("=== Vagas em que sua experiência já é suficiente ===");
+
+  if (vagasAcessiveis.length === 0) {
+    console.log("Nenhuma vaga");
+  } else {
+    console.log(vagasAcessiveis.map(vaga => vaga.empresa).join(", "));
+  }
+  console.log("");
+
+  // Descobre qual vaga tem o maior percentual de compatibilidade (usa reduce)
+  const melhorVaga = encontrarMelhorVaga(listaVagas);
+
+  console.log("=== Melhor vaga para o seu perfil ===");
+  console.log(melhorVaga.empresa + " - " + melhorVaga.cargo + " (" + Math.round(calcularPercentual(melhorVaga)) + "% de compatibilidade)");
+  console.log("");
+
+  // Conta quantas vezes cada habilidade faltante aparece nas vagas e escolhe a prioridade de estudo
+  const contagem = contarFaltantes(listaVagas);
+  const prioridade = escolherPrioridade(contagem);
+
+  console.log("=== Recomendação de estudo ===");
+  console.log("Habilidades que faltam (e em quantas vagas aparecem):", contagem);
+  console.log("Prioridade de estudo: " + prioridade);
+};
+
+gerarRelatorio();
