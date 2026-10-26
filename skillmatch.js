@@ -106,3 +106,19 @@ const criarContadorDeVagas = () => {
     return numero;
   };
 };
+
+//=== Servidor simulado ===
+
+// No simulador, o servidor recebe a probeça de entregar o array de vagas do projeto, espra 1 segundo e resolve entregando o array, ou rejeita.
+
+const buscarVagas = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(vagas);
+    }, 3000);
+  });
+};
+
+buscarVagas().then(resultado => {
+  console.log(resultado.length);
+});
