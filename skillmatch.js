@@ -148,3 +148,26 @@ const encontrarMelhorVaga = (listaVagas) => {
 };
 
 console.log(encontrarMelhorVaga(vagas).empresa);
+
+// (escreva aqui, com as suas palavras, o que a função recebe e devolve)
+const contarFaltantes = (listaVagas) => {
+  const contagem = {};
+
+  for (let i = 0; i < listaVagas.length; i++) {
+    const faltantes = habilidadesFaltantes(listaVagas[i]);
+
+    for (let j = 0; j < faltantes.length; j++) {
+      const habilidade = faltantes[j];
+
+      if (contagem[habilidade] === undefined) {
+        contagem[habilidade] = 1;
+      } else {
+        contagem[habilidade] = +1;
+      }
+    }
+  }
+
+  return contagem;
+};
+
+console.log(contarFaltantes(vagas));
