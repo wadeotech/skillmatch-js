@@ -147,9 +147,10 @@ const encontrarMelhorVaga = (listaVagas) => {
   });
 };
 
-console.log(encontrarMelhorVaga(vagas).empresa);
+//console.log(encontrarMelhorVaga(vagas).empresa);
 
-// (escreva aqui, com as suas palavras, o que a função recebe e devolve)
+// A função recebe a lista de vagas e, para cada vaga, descobre as habilidades que faltam ao candidato. Depois conta quantas vezes cada habilidade faltante aparece nas vagas e devolve um objeto em que a chave é o nome da habilidade e o valor é essa quantidade.
+
 const contarFaltantes = (listaVagas) => {
   const contagem = {};
 
@@ -162,7 +163,7 @@ const contarFaltantes = (listaVagas) => {
       if (contagem[habilidade] === undefined) {
         contagem[habilidade] = 1;
       } else {
-        contagem[habilidade] = +1;
+        contagem[habilidade] = contagem[habilidade] + 1;
       }
     }
   }
@@ -170,4 +171,26 @@ const contarFaltantes = (listaVagas) => {
   return contagem;
 };
 
-console.log(contarFaltantes(vagas));
+//console.log(contarFaltantes(vagas));
+
+// A função recebe o objeto com a contagem das habilidades faltantes e devolve o nome da habilidade que mais aparece, que é a prioridade de estudo, pois estudá-la aproxima o candidato de mais vagas. Se duas habilidades empatam, vale a primeira encontrada. Se não houver nenhuma habilidade faltante, devolve a mensagem "Nenhuma habilidade faltando".
+
+const escolherPrioridade = (contagem) => {
+  const habilidades = Object.keys(contagem);
+
+  if (habilidades.length === 0) {
+    return "Nenhuma habilidade faltando";
+  }
+
+  let prioritaria = habilidades[0];
+
+  for (let i = 1; i < habilidades.length; i++) {
+    if (contagem[habilidades[i]] > contagem[prioritaria]) {
+      prioritaria = habilidades[i];
+    }
+  }
+
+  return prioritaria;
+};
+
+   console.log(escolherPrioridade({ "React": 1, "Node.js": 3, "API REST": 2 }));
