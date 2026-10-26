@@ -24,8 +24,8 @@ class Vaga {
   }
 
   resumo() {
-    return " A empresa " + this.empresa + " está contratando: " + this.cargo + " ; Requisitos solicitados: " + this.requisitos + " ; Experiência mínima necessária: " + this.experienciaMinimaMeses + " meses ";
-  }
+    return " A empresa " + this.empresa + " está contratando: " + this.cargo + " ; Requisitos solicitados: " + this.requisitos.join(", ") + " ; Experiência mínima necessária: " + this.experienciaMinimaMeses + " meses";
+}
 }
 
 // A classe representa uma vaga de trabalho remoto que herda os dados da classe mãe e acrescenta a forma de trabalho.
@@ -147,8 +147,6 @@ const encontrarMelhorVaga = (listaVagas) => {
   });
 };
 
-//console.log(encontrarMelhorVaga(vagas).empresa);
-
 // A função recebe a lista de vagas e, para cada vaga, descobre as habilidades que faltam ao candidato. Depois conta quantas vezes cada habilidade faltante aparece nas vagas e devolve um objeto em que a chave é o nome da habilidade e o valor é essa quantidade.
 
 const contarFaltantes = (listaVagas) => {
@@ -171,8 +169,6 @@ const contarFaltantes = (listaVagas) => {
   return contagem;
 };
 
-//console.log(contarFaltantes(vagas));
-
 // A função recebe o objeto com a contagem das habilidades faltantes e devolve o nome da habilidade que mais aparece, que é a prioridade de estudo, pois estudá-la aproxima o candidato de mais vagas. Se duas habilidades empatam, vale a primeira encontrada. Se não houver nenhuma habilidade faltante, devolve a mensagem "Nenhuma habilidade faltando".
 
 const escolherPrioridade = (contagem) => {
@@ -193,4 +189,26 @@ const escolherPrioridade = (contagem) => {
   return prioritaria;
 };
 
-   console.log(escolherPrioridade({ "React": 1, "Node.js": 3, "API REST": 2 }));
+// A função monta o relatório no console. Ela espera as vagas chegarem do servidor simulado e, depois, imprime o cabeçalho com os dados do candidato e o resumo de cada vaga, numerada.
+const gerarRelatorio = async () => {
+  console.log("Carregando vagas do servidor...");
+  const listaVagas = await carregarVagas();
+
+  if (listaVagas.length === 0) {
+    console.log("Não foi possível gerar o relatório: nenhuma vaga disponível.");
+    return;
+  }
+
+  const proximoNumero = criarContadorDeVagas();
+
+  console.log("=== SkillMatch JS: Relatório de Compatibilidade ===");
+  console.log("Candidato: " + candidato.nome);
+  console.log("Área de interesse: " + candidato.areaInteresse);
+  console.log("");
+
+  for (let i = 0; i < listaVagas.length; i++) {
+    console.log("Vaga " + proximoNumero() + ":" + listaVagas[i].resumo());
+  }
+};
+
+gerarRelatorio();
