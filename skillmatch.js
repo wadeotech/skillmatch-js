@@ -189,26 +189,49 @@ const escolherPrioridade = (contagem) => {
   return prioritaria;
 };
 
-// A função monta o relatório no console. Ela espera as vagas chegarem do servidor simulado e, depois, imprime o cabeçalho com os dados do candidato e o resumo de cada vaga, numerada.
+// A função async monta e exibe o relatório completo no console. Carrega as vagas do servidor simulado (await), e, se houver vagas, mostra o cabeçalho do candidato e, para cada vaga, exibe: o resumo numerado, o percentual com a classificação, as habilidades que faltam e a comparação de experiência. Se nenhuma vaga for carregada, exibe uma mensagem e encerra sem gerar o relatório.
+
 const gerarRelatorio = async () => {
   console.log("Carregando vagas do servidor...");
+  // await pausa a função até a promessa do servidor simulado ser cumprida
   const listaVagas = await carregarVagas();
 
+  // Se a lista vier vazia (falha no servidor), encerra sem gerar o relatório
   if (listaVagas.length === 0) {
     console.log("Não foi possível gerar o relatório: nenhuma vaga disponível.");
     return;
   }
 
+  // Cria o contador (closure) que numera as vagas a cada chamada
   const proximoNumero = criarContadorDeVagas();
 
+  // Cabeçalho do relatório
   console.log("=== SkillMatch JS: Relatório de Compatibilidade ===");
   console.log("Candidato: " + candidato.nome);
   console.log("Área de interesse: " + candidato.areaInteresse);
   console.log("");
 
+  // Para cada vaga, exibe os dados e a análise de compatibilidade
   for (let i = 0; i < listaVagas.length; i++) {
-    console.log("Vaga " + proximoNumero() + ":" + listaVagas[i].resumo());
+    const vaga = listaVagas[i];
+    const percentual = calcularPercentual(vaga);
+
+    // resumo() usa polimorfismo: Vaga e VagaRemota respondem de forma diferente
+    console.log("Vaga " + proximoNumero() + ":" + vaga.resumo());
+    console.log("  Compatibilidade: " + Math.round(percentual) + "% - " + classificarCompatibilidade(percentual));
+
+    // Habilidades exigidas pela vaga que o candidato ainda não tem
+    const faltantes = habilidadesFaltantes(vaga);
+
+    if (faltantes.length === 0) {
+      console.log("  Habilidades que faltam: nenhuma");
+    } else {
+      console.log("  Habilidades que faltam:", faltantes);
+    }
+
+    console.log("");
   }
 };
 
+// Executa o relatório
 gerarRelatorio();
