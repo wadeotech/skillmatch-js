@@ -106,3 +106,31 @@ const criarContadorDeVagas = () => {
     return numero;
   };
 };
+
+//=== Servidor simulado ===
+
+// A função simula um servidor, devolve uma promessa de entrega, espera 3 segundos e confere se há vagas, se houver, entrega o array de vagas, do contrário, rejeita a promessa.
+
+const buscarVagas = () => {
+  return new Promise((resolve, reject) => {
+        setTimeout(() => {
+      if (vagas.length > 0) {
+        resolve(vagas);
+      } else {
+        reject("Nenhuma vaga encontrada no servidor.");
+      }
+    }, 3000);
+  });
+};
+
+// A função usa a promessa do servidor simulado, chama buscarVagas em um bloco (try), espera até que a promessa seja cumprida (await), se a promessa falhar, o catch mostra uma mensagem de erro e devolve uma lista vazia.
+
+const carregarVagas = async () => {
+  try {
+    const listaVagas = await buscarVagas();
+    return listaVagas;
+  } catch (erro) {
+    console.log("Erro ao carregar as vagas:", erro);
+    return []
+  }
+};
