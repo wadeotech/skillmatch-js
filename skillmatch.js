@@ -134,3 +134,17 @@ const carregarVagas = async () => {
     return []
   }
 };
+
+// A função recebe a lista de vagas, usa o reduce para comparar as vagas e retorna a melhor vaga, usando como referência o percentual de aderência do candidato à vaga.
+
+const encontrarMelhorVaga = (listaVagas) => {
+  return listaVagas.reduce((melhor, atual) => {
+    if (calcularPercentual(atual) > calcularPercentual(melhor)) {
+      return atual;
+    } else {
+      return melhor;
+    }
+  });
+};
+
+console.log(encontrarMelhorVaga(vagas).empresa);
