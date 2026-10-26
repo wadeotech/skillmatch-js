@@ -134,5 +134,3 @@ const carregarVagas = async () => {
     return []
   }
 };
-
-carregarVagas().then(lista => console.log(lista.length))
